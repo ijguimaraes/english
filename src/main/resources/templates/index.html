@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Text-to-Speech</title>
+  <style>
+    button {
+      margin: 2px;
+    }
+    .center {
+      margin: auto;
+      width: 60%;
+      padding: 10px;
+    }
+    .button-size {
+      height:40px;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <h1>Portugues to English</h1>
+  <button onclick="window.location.reload()">Refresh Page</button>
+  <div id="frameBlock" class="center">
+    <div>
+      <div id="framePtBlock">
+        <button id="btnOuvirPt" class="button-size" onclick="speakPt()">Ouvir PT</button>
+      </div>
+      <div id="frameEnBlock">
+        <button id="btnOuvirEn" class="button-size" onclick="speakEn()">Ouvir EN</button>
+      </div>
+    </div>
+    <div style="margin-top: 20px;">
+      <div id="showBlock" style="width: 100%;">
+        <button id="btnMostrar" class="button-size" onclick="doShowAnswer()">Mostrar</button>
+      </div>
+      <div id="rightWorngBlock" style="width: 100%; display: flex;">
+        <div style="width: 50%; padding: 1px;">
+          <button id="btnErrado" class="button-size" onclick="answerWorng()">Errado</button>
+        </div>
+        <div style="width: 50%; padding: 1px;">
+          <button id="btnCerto" class="button-size" onclick="answerRight()">Certo</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+
+    var frame = {};
+    var btnOuvirEn = document.getElementById("btnOuvirEn");
+    var listenAgain = 0;
+
+
+    const doWaitAnswerStatus = () => {
+      var showBlock = document.getElementById("showBlock");
+      var rightWorngBlock = document.getElementById("rightWorngBlock");
+      var frameEnBlock = document.getElementById("frameEnBlock");
+      frameEnBlock.style.visibility = "hidden";
+      showBlock.style.display = "block";
+      rightWorngBlock.style.display = "none";
+    };
+
+    const doInit = () => {
+      doWaitAnswerStatus();
+      getFrame({});
+    };
+
+    const doShowAnswer = () => {
+      var showBlock = document.getElementById("showBlock");
+      var rightWorngBlock = document.getElementById("rightWorngBlock");
+      var frameEnBlock = document.getElementById("frameEnBlock");
+      frameEnBlock.style.visibility = "visible";
+      showBlock.style.display = "none";
+      rightWorngBlock.style.display = "flex";
+
+      speakEn();
+    }
+
+    const doHiddenAnswer = () => {
+      var showBlock = document.getElementById("showBlock");
+      var rightWorngBlock = document.getElementById("rightWorngBlock");
+      var frameEnBlock = document.getElementById("frameEnBlock");
+      frameEnBlock.style.visibility = "hidden";
+      showBlock.style.display = "block";
+      rightWorngBlock.style.display = "none";
+    }
+
+    const getFrame = async (data) => {
+      var url = "/api/frames/next";
+
+      var options = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+      };
+
+      fetch(url, options)
+        .then(response => response.json())
+        .then(data => {
+          const frameBlock = document.getElementById("frameBlock");
+          if (data.id == null) {
+            frameBlock.style.visibility = "hidden";
+          } else {
+            frameBlock.style.visibility = "visible";
+            frame = data;
+            btnOuvirEn.textContent = "Ouvir EN";
+            listenAgain = 0;
+            speakPt();
+          }
+        })
+        .catch(error => {
+
+          console.error("Erro na requisição:", error);
+        });
+      doWaitAnswerStatus()
+    }
+
+    const speak = async (text, lang) => {
+      if ('speechSynthesis' in window) {
+        const speech = new SpeechSynthesisUtterance(text);
+        speech.lang = lang;
+        window.speechSynthesis.speak(speech);
+      } else {
+        console.error('API de síntese de fala não suportada');
+      }
+    }
+
+    const speakPt = () => speak(frame.pt, "pt-BR");
+    const speakEn = () => {
+      if (listenAgain >=3) {
+        btnOuvirEn.textContent = "Ouvir EN: "+frame.en;
+      }
+      listenAgain++;
+      speak(frame.en, "en");
+    }
+    const answerRight = () => getFrame({id: frame.id, answer: true});
+    const answerWorng = () => getFrame({id: frame.id, answer: false});
+
+    doInit();
+  </script>
+</body>
+</html>
