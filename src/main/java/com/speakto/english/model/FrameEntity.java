@@ -19,5 +19,5 @@ public class FrameEntity {
     @Column(name = "next_test")
     private LocalDateTime nextTest;
     @Column(name = "num_right_answer")
-    private Integer minutesToNextTest;
+    private Long minutesToNextTest;
 }

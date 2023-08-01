@@ -148,3 +148,19 @@ INSERT INTO frames(en, pt, next_test, num_right_answer) VALUES('It''s 7:15 here.
 INSERT INTO frames(en, pt, next_test, num_right_answer) VALUES('It''s at that country.', 'É naquele país.', now(), 5);
 INSERT INTO frames(en, pt, next_test, num_right_answer) VALUES('It''s in the morning.', 'É de manhã.', now(), 5);
 INSERT INTO frames(en, pt, next_test, num_right_answer) VALUES('It''s now.', 'É agora.', now(), 5);
+
+INSERT INTO frames(en, pt, next_test, num_right_answer) VALUES('I already know how to swim.', 'Eu já sei nadar.', now(), 1);
+INSERT INTO frames(en, pt, next_test, num_right_answer) VALUES('She already knows how to play the guitar.', 'Ela já sabe tocar violão.', now(), 1);
+INSERT INTO frames(en, pt, next_test, num_right_answer) VALUES('Do you already know how to cook that recipe?', 'Você já sabe cozinhar aquela receita?', now(), 1);
+INSERT INTO frames(en, pt, next_test, num_right_answer) VALUES('He already knows how to speak three languages fluently.', 'Ele já sabe falar três idiomas fluentemente.', now(), 1);
+INSERT INTO frames(en, pt, next_test, num_right_answer) VALUES('We already know how to solve this problem.', 'Nós já sabemos resolver esse problema.', now(), 1);
+INSERT INTO frames(en, pt, next_test, num_right_answer) VALUES('The students in this advanced class already know how to write essays effectively.', 'Os estudantes dessa turma avançada já sabem escrever ensaios efetivamente.', now(), 1);
+INSERT INTO frames(en, pt, next_test, num_right_answer) VALUES('Once you already know', 'Uma vez que você já sabe', now(), 1);
+INSERT INTO frames(en, pt, next_test, num_right_answer) VALUES('you already know how to', 'você já sabe como', now(), 1);
+INSERT INTO frames(en, pt, next_test, num_right_answer) VALUES('know how to ride a bike', 'andar de bicicleta', now(), 1);
+INSERT INTO frames(en, pt, next_test, num_right_answer) VALUES('it becomes second nature', 'torna-se algo natural', now(), 1);
+INSERT INTO frames(en, pt, next_test, num_right_answer) VALUES('Once you already know how to ride a bike, it becomes second nature.', 'Assim que você já sabe andar de bicicleta, isso se torna algo natural.', now(), 1);
+INSERT INTO frames(en, pt, next_test, num_right_answer) VALUES('The team already knows how to handle high-pressure situations on the field.', 'A equipe já sabe lidar com situações de alta pressão no campo.', now(), 1);
+INSERT INTO frames(en, pt, next_test, num_right_answer) VALUES('She already knows how to program.', 'Ela já sabe programar.', now(), 1);
+INSERT INTO frames(en, pt, next_test, num_right_answer) VALUES('Make sure you already know how to solve these equations.', 'Tenha certeza de que você já sabe resolver essas equações.', now(), 1);
+

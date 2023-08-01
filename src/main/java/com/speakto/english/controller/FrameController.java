@@ -4,6 +4,7 @@ import com.speakto.english.controller.request.NextFrameBody;
 import com.speakto.english.controller.response.FrameResponse;
 import com.speakto.english.model.FrameEntity;
 import com.speakto.english.repository.FrameRepository;
+import com.speakto.english.service.NextTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -45,12 +46,38 @@ public class FrameController {
         return frameRepository.findById(body.getId())
                 .map(frameEntity -> {
                     if (body.getAnswer()) {
-                        frameEntity.setMinutesToNextTest(frameEntity.getMinutesToNextTest() * 2);
+                        if (frameEntity.getMinutesToNextTest() <= 10) {
+                            frameEntity.setMinutesToNextTest(NextTime.get30Minutes());
+                        } else if (frameEntity.getMinutesToNextTest() <= NextTime.get30Minutes()) {
+                            frameEntity.setMinutesToNextTest(NextTime.getAnHour());
+                        } else if (frameEntity.getMinutesToNextTest() <= NextTime.getAnHour()) {
+                            frameEntity.setMinutesToNextTest(NextTime.getAhDay());
+                        } else if (frameEntity.getMinutesToNextTest() <= NextTime.getAhDay()) {
+                            frameEntity.setMinutesToNextTest(NextTime.getTwoDays());
+                        } else if (frameEntity.getMinutesToNextTest() <= NextTime.getTwoDays()) {
+                            frameEntity.setMinutesToNextTest(NextTime.getFourDays());
+                        } else if (frameEntity.getMinutesToNextTest() <= NextTime.getFourDays()) {
+                            frameEntity.setMinutesToNextTest(NextTime.getAhWeek());
+                        } else if (frameEntity.getMinutesToNextTest() <= NextTime.getAhWeek()) {
+                            frameEntity.setMinutesToNextTest(NextTime.getTwoWeek());
+                        } else if (frameEntity.getMinutesToNextTest() <= NextTime.getTwoWeek()) {
+                            frameEntity.setMinutesToNextTest(NextTime.getAhMonth());
+                        } else if (frameEntity.getMinutesToNextTest() <= NextTime.getAhMonth()) {
+                            frameEntity.setMinutesToNextTest(NextTime.getTwoMonth());
+                        } else if (frameEntity.getMinutesToNextTest() <= NextTime.getTwoMonth()) {
+                            frameEntity.setMinutesToNextTest(NextTime.getThreeMonth());
+                        } else if (frameEntity.getMinutesToNextTest() <= NextTime.getThreeMonth()) {
+                            frameEntity.setMinutesToNextTest(NextTime.getSixMonth());
+                        } else if (frameEntity.getMinutesToNextTest() <= NextTime.getSixMonth()) {
+                            frameEntity.setMinutesToNextTest(NextTime.getAhYear());
+                        } else {
+                            frameEntity.setMinutesToNextTest(NextTime.getAhYear());
+                        }
                         frameEntity.setNextTest(
                                 LocalDateTime.now().plusMinutes(frameEntity.getMinutesToNextTest())
                         );
                     } else {
-                        frameEntity.setMinutesToNextTest(5);
+                        frameEntity.setMinutesToNextTest(10L);
                         frameEntity.setNextTest(
                                 LocalDateTime.now()
                         );

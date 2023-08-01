@@ -23,11 +23,11 @@
   <button onclick="window.location.reload()">Refresh Page</button>
   <div id="frameBlock" class="center">
     <div>
-      <div id="framePtBlock">
-        <button id="btnOuvirPt" class="button-size" onclick="speakPt()">Ouvir PT</button>
-      </div>
-      <div id="frameEnBlock">
+      <div id="frameFrontBlock">
         <button id="btnOuvirEn" class="button-size" onclick="speakEn()">Ouvir EN</button>
+      </div>
+      <div id="frameBackBlock">
+        <button id="btnOuvirPt" class="button-size" onclick="speakPt()">Ouvir PT</button>
       </div>
     </div>
     <div style="margin-top: 20px;">
@@ -36,7 +36,7 @@
       </div>
       <div id="rightWorngBlock" style="width: 100%; display: flex;">
         <div style="width: 50%; padding: 1px;">
-          <button id="btnErrado" class="button-size" onclick="answerWorng()">Errado</button>
+          <button id="btnErrado" class="button-size" onclick="answerWrong()">Errado</button>
         </div>
         <div style="width: 50%; padding: 1px;">
           <button id="btnCerto" class="button-size" onclick="answerRight()">Certo</button>
@@ -49,13 +49,14 @@
     var frame = {};
     var btnOuvirEn = document.getElementById("btnOuvirEn");
     var listenAgain = 0;
+    var showChoices = false;
 
 
     const doWaitAnswerStatus = () => {
       var showBlock = document.getElementById("showBlock");
       var rightWorngBlock = document.getElementById("rightWorngBlock");
-      var frameEnBlock = document.getElementById("frameEnBlock");
-      frameEnBlock.style.visibility = "hidden";
+      var frameBackBlock = document.getElementById("frameBackBlock");
+      frameBackBlock.style.visibility = "hidden";
       showBlock.style.display = "block";
       rightWorngBlock.style.display = "none";
     };
@@ -68,21 +69,22 @@
     const doShowAnswer = () => {
       var showBlock = document.getElementById("showBlock");
       var rightWorngBlock = document.getElementById("rightWorngBlock");
-      var frameEnBlock = document.getElementById("frameEnBlock");
-      frameEnBlock.style.visibility = "visible";
+      var frameBackBlock = document.getElementById("frameBackBlock");
+      frameBackBlock.style.visibility = "visible";
       showBlock.style.display = "none";
       rightWorngBlock.style.display = "flex";
-
-      speakEn();
+      showChoices = true;
+      speakPt();
     }
 
     const doHiddenAnswer = () => {
       var showBlock = document.getElementById("showBlock");
       var rightWorngBlock = document.getElementById("rightWorngBlock");
-      var frameEnBlock = document.getElementById("frameEnBlock");
-      frameEnBlock.style.visibility = "hidden";
+      var frameBackBlock = document.getElementById("frameBackBlock");
+      frameBackBlock.style.visibility = "hidden";
       showBlock.style.display = "block";
       rightWorngBlock.style.display = "none";
+      showChoices = false;
     }
 
     const getFrame = async (data) => {
@@ -107,7 +109,8 @@
             frame = data;
             btnOuvirEn.textContent = "Ouvir EN";
             listenAgain = 0;
-            speakPt();
+            showChoices = false;
+            speakEn();
           }
         })
         .catch(error => {
@@ -136,8 +139,23 @@
       speak(frame.en, "en");
     }
     const answerRight = () => getFrame({id: frame.id, answer: true});
-    const answerWorng = () => getFrame({id: frame.id, answer: false});
+    const answerWrong = () => getFrame({id: frame.id, answer: false});
 
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'a') {
+        speakEn();
+      } else if (event.key === 's') {
+        doShowAnswer();
+      } else if (showChoices) {
+        if (event.key === 'q') {
+          speakPt();
+        } if (event.key === 'ArrowRight') {
+          answerRight();
+        } else if (event.key === 'ArrowLeft') {
+          answerWrong();
+        }
+      }
+    });
     doInit();
   </script>
 </body>
