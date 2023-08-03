@@ -149,9 +149,9 @@
       } else if (showChoices) {
         if (event.key === 'q') {
           speakPt();
-        } if (event.key === 'ArrowRight') {
+        } if (event.key === 'ArrowRight' || event.key === 'd') {
           answerRight();
-        } else if (event.key === 'ArrowLeft') {
+        } else if (event.key === 'ArrowLeft' || event.key === 'w') {
           answerWrong();
         }
       }

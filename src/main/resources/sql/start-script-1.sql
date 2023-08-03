@@ -446,7 +446,6 @@ INSERT INTO frames(en, pt, next_test, num_right_answer) VALUES('Why do your chil
 
 
 INSERT INTO frames(en, pt, next_test, num_right_answer) VALUES('i see your ties.', 'eu vejo suas gravatas.', now(), 1);
-INSERT INTO frames(en, pt, next_test, num_right_answer) VALUES('i your thighs.', 'eu suas coxas.', now(), 1);
 INSERT INTO frames(en, pt, next_test, num_right_answer) VALUES('he is a tinker.', 'ele é um ferramenteiro.', now(), 1);
 INSERT INTO frames(en, pt, next_test, num_right_answer) VALUES('he is a thinker.', 'ele é um pensador.', now(), 1);
 INSERT INTO frames(en, pt, next_test, num_right_answer) VALUES('i have a fate.', 'eu tenho um destino.', now(), 1);
@@ -514,8 +513,36 @@ INSERT INTO frames(en, pt, next_test, num_right_answer) VALUES('Can I go with yo
 
 
 
-update frames set num_right_answer = 10;
+update frames set num_right_answer = 10 where id >= 500;
+
+
+select count(*) from frames;
+--UPDATE frames SET next_test = next_test + INTERVAL '2 day' where next_test <= now() and id < 100;
+--UPDATE frames SET next_test = next_test + INTERVAL '3 day' where next_test <= now() and id >= 100 and id <= 200;
+--UPDATE frames SET next_test = next_test + INTERVAL '4 day' where next_test <= now() and id >= 200 and id <= 300;
+--UPDATE frames SET next_test = next_test + INTERVAL '5 day' where next_test <= now() and id >= 300 and id <= 400;
+--UPDATE frames SET next_test = next_test + INTERVAL '6 day' where next_test <= now() and id >= 400 and id <= 500;
+
+UPDATE frames SET next_test = next_test + INTERVAL '7 day' where next_test <= now() and id >= 500 and id <= 600;
+
+
+--UPDATE frames SET next_test = next_test + INTERVAL '2 day' where id < 100;
+--UPDATE frames SET next_test = next_test + INTERVAL '3 day' where id >= 100 and id <= 200;
+--UPDATE frames SET next_test = next_test + INTERVAL '4 day' where id >= 200 and id <= 300;
+--UPDATE frames SET next_test = next_test + INTERVAL '5 day' where id >= 300 and id <= 400;
+--UPDATE frames SET next_test = next_test + INTERVAL '6 day' where id >= 400 and id <= 500;
+--UPDATE frames SET next_test = next_test + INTERVAL '7 day' where id >= 500 and id <= 600;
+
+
 
 
 select * from frames f where next_test <= now() order by next_test;
+
+
+select * from frames f order by next_test;
+
+select pt, count(pt) from frames group by pt having count(*) > 1
+
+Ela vende muita carne.
+Ele bebe muito café.
 
