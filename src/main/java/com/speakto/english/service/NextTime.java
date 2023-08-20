@@ -18,7 +18,7 @@ public class NextTime {
     }
 
     public static Long getFourDays() {
-        return getAhDay()*2;
+        return getAhDay()*4;
     }
 
     public static Long getAhWeek() {

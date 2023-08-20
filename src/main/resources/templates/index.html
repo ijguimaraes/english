@@ -132,9 +132,11 @@
 
     const speakPt = () => speak(frame.pt, "pt-BR");
     const speakEn = () => {
-      if (listenAgain >=3) {
+
+      if (listenAgain >=10) {
         btnOuvirEn.textContent = "Ouvir EN: "+frame.en;
       }
+
       listenAgain++;
       speak(frame.en, "en");
     }
