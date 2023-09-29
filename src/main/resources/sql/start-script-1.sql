@@ -535,11 +535,11 @@ UPDATE frames SET next_test = next_test + INTERVAL '7 day' where next_test <= no
 
 
 
+select count(*) from frames f where next_test <= now();
 
-select * from frames f where next_test <= now() order by next_test;
+select * from frames f where next_test <= now() order by next_test, id;
 
-
-select * from frames f order by next_test;
+select * from frames f order by next_test, id;
 
 select pt, count(pt) from frames group by pt having count(*) > 1
 

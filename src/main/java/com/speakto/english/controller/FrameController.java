@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 import java.util.Optional;
 
 @RestController()
@@ -33,7 +34,7 @@ public class FrameController {
     }
 
     private FrameResponse getNextFrame() {
-        return frameRepository.findFirstByNextTestLessThanEqualOrderByNextTest(LocalDateTime.now())
+        return frameRepository.findNextTest(LocalDateTime.now())
                 .map(f -> FrameResponse.builder()
                         .id(f.getId())
                         .en(f.getEn())
@@ -46,7 +47,7 @@ public class FrameController {
         return frameRepository.findById(body.getId())
                 .map(frameEntity -> {
                     if (body.getAnswer()) {
-                        if (frameEntity.getMinutesToNextTest() <= 10) {
+                        if (Objects.isNull(frameEntity.getMinutesToNextTest()) || frameEntity.getMinutesToNextTest() <= 10) {
                             frameEntity.setMinutesToNextTest(NextTime.get30Minutes());
                         } else if (frameEntity.getMinutesToNextTest() <= NextTime.get30Minutes()) {
                             frameEntity.setMinutesToNextTest(NextTime.getAnHour());

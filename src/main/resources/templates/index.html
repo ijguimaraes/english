@@ -67,6 +67,9 @@
     };
 
     const doShowAnswer = () => {
+      if (!frame.id) {
+        return;
+      }
       var showBlock = document.getElementById("showBlock");
       var rightWorngBlock = document.getElementById("rightWorngBlock");
       var frameBackBlock = document.getElementById("frameBackBlock");
@@ -110,7 +113,7 @@
             btnOuvirEn.textContent = "Ouvir EN";
             listenAgain = 0;
             showChoices = false;
-            speakEn();
+            //speakEn();
           }
         })
         .catch(error => {
@@ -133,7 +136,7 @@
     const speakPt = () => speak(frame.pt, "pt-BR");
     const speakEn = () => {
 
-      if (listenAgain >=10) {
+      if (listenAgain >=6) {
         btnOuvirEn.textContent = "Ouvir EN: "+frame.en;
       }
 
